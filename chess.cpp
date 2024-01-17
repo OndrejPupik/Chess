@@ -202,6 +202,7 @@ bool poprve = true, spec = false, Ksach = false;
 std::pair<int, int> kdo;
 bool nebezpeci(std::pair<int,int> kde, char barvos, bool kralos);
 std::pair<bool, int> enpes;
+bool rosada = false;
 bool muze(std::pair<int, int> par, std::pair<int, int>& par2 ){
     ChessPiece odkud = *Sach[par.first][par.second];
     bool fg = false;
@@ -297,6 +298,7 @@ bool muze(std::pair<int, int> par, std::pair<int, int>& par2 ){
             if(!nebezpeci({2, par2.second}, odkud.barva, false) && !nebezpeci({3, par2.second}, odkud.barva, false) && !nebezpeci({4, par2.second}, odkud.barva, false)){
                 Premistit(Sach[0][par2.second], 3, par2.second);
                 Sach[0][par2.second] = nullptr;
+                rosada = true;
                 return true;
 
             }
@@ -305,6 +307,7 @@ bool muze(std::pair<int, int> par, std::pair<int, int>& par2 ){
             if(!nebezpeci({4, par2.second}, odkud.barva, false) && !nebezpeci({5, par2.second}, odkud.barva, false) && !nebezpeci({6, par2.second}, odkud.barva, false)){
                 Premistit(Sach[7][par2.second], 5, par2.second);
                 Sach[7][par2.second] = nullptr;
+                rosada = true;
                 return true;
             }
         }
@@ -523,7 +526,7 @@ int main()
                     poprve = false;
                 }
                 if(muze(par, par2)){ 
-                    if(VKlidu(koho, par, par2)){
+                    if(VKlidu(koho, par, par2) || rosada == true){
                         Sach[par.first][par.second] = nullptr;
                         
                         if(spec){
@@ -579,6 +582,7 @@ int main()
                             text.setPosition(270, 360);
                             window.draw(text);
                         }
+                        rosada = false;
                     }
                 }
                 else{
